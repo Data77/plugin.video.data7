@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2e1ea9d3-b300-4100-9d6e-7d165243cd7e}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>default.py</StartupFile>
+    <SearchPath>..\</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="changelog.txt" />
+    <Content Include="fanart.jpg" />
+    <Content Include="icon.png" />
+    <Content Include="images\Ustawienia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="default.py" />
+    <Compile Include="host\frm_filmy.py" />
+    <Compile Include="host\frm_filmy\frm_filmy_iptak.py" />
+    <Compile Include="host\frm_filmy\frm_filmy_zalukajtv.py" />
+    <Compile Include="host\frm_filmy\frm_filmy_eFilmy.py" />
+    <Compile Include="host\frm_seriale.py" />
+    <Compile Include="host\frm_filmy\frm_filmy_alekinotv.py" />
+    <Compile Include="host\frm_seriale\frm_seriale_alekinotv.py" />
+    <Compile Include="host\frm_seriale\frm_seriale_eFilmy.py" />
+    <Compile Include="host\frm_seriale\frm_seriale_zalukajtv.py" />
+    <Compile Include="resources\lib\BeautifulSoup.py" />
+    <Compile Include="resources\lib\libCommon2.py" />
+    <Compile Include="resources\lib\Parser.py" />
+    <Compile Include="resources\lib\Player.py" />
+    <Compile Include="resources\lib\settings.py" />
+    <Compile Include="resources\lib\urlparser.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="host" />
+    <Folder Include="host\frm_seriale\" />
+    <Folder Include="host\frm_filmy\" />
+    <Folder Include="images" />
+    <Folder Include="resources\" />
+    <Folder Include="resources\lib" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

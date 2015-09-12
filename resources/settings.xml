@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+        <category label="mmtv.pl">
+                <setting type="lsep" label="zaloguj sie do serwisu"/>
+                <setting id="mmtv_login" type="bool" label="Zaloguj się" default="false" />
+                <setting type="sep"/>
+                <setting type="lsep" label="Login i hasło" />
+                <setting id="mmtv_user" type="text" label="login" default="" />
+                <setting id="mmtv_pass" type="text" label="hasło" option="hidden"  default="" />
+                <setting id="mmtv_deviceid" type="text" label="Id urzadzenia" default="asd32d12122b344234432b423d242e2a32343200" />
+                <setting id="mmtv_platform" type="text" label="Platforma" default="IOS" />
+                <setting id="mmtv_terminal" type="text" label="Typ" default="PHONE" />
+               
+        </category>
+        <category label="scs.pl">
+                <setting type="lsep" label="zaloguj sie do serwisu"/>
+                <setting id="scs.pl_login" type="bool" label="Zaloguj się" default="false" />
+                <setting type="sep"/>
+                <setting type="lsep" label="Login i hasło" />
+                <setting id="scs.pl_user" type="text" label="login" default="" />
+                <setting id="scs.pl_pass" type="text" label="hasło" option="hidden"  default="" />
+        </category>
+        <category label="wrzuta.pl">
+                <setting type="lsep" label="zaloguj sie do serwisu"/>
+                <setting id="wrzuta_login" type="bool" label="Zaloguj się" default="false" />
+                <setting type="sep"/>
+                <setting type="lsep" label="Login i hasło" />
+                <setting id="wrzuta_user" type="text" label="login" default="" />
+                <setting id="wrzuta_pass" type="text" label="hasło" option="hidden"  default="" />      
+        </category>
+        <category label="cda.pl">
+                <setting id="cda_wersja" type="labelenum" label="Preferowana jakość filmu" values="480p|720p|1080p" default="720p" />
+                <setting id="cda_show_wersja" type="bool" label="Pokazuj jakość filmu na liście (obniża prędkość generowania listy)" default="false" />
+        </category>
+</settings>

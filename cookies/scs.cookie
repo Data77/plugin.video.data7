@@ -1,0 +1,10 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.scs.pl	TRUE	/	FALSE	1460585204	__cfduid	dbadd3d0e1d6b72afbc76e2c3a2a965ea1429049204
+.scs.pl	TRUE	/	FALSE	1429063604	b7965398a36bdbad839fe17b5219add1	ssqoi6k7qedn9ad4pan94bvq14
+scs.pl	FALSE	/	FALSE		2d6b7d601320f807d284b0eb988b8bb8	1
+scs.pl	FALSE	/	FALSE		698c2b1a6c2f07359a75fedf6344d084	2
+scs.pl	FALSE	/	FALSE		979203ab139fd1b81c7d94ad447627c3	1
+scs.pl	FALSE	/	FALSE	1429078004	PHPSESSID	ssqoi6k7qedn9ad4pan94bvq14
