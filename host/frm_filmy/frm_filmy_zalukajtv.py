@@ -28,7 +28,6 @@ class frm_filmy_zalukajtv():
     def getPlaySource(self, url):
         links = {}
         pageData = self.urlhelper.getMatches(url, '<iframe allowTransparency="true" src="(.*?)"', ['id'], True)
-        print "ZALUKAJ::" + pageData.first["id"]
         if pageData.first:
             playerUrl = self.mainUrl + pageData.first["id"]+"&x=1"
             pageData = self.urlhelper.getMatches(playerUrl, 'href="(.*?)"><span>(.*?)</span></a>', ["id","title"])
@@ -40,7 +39,7 @@ class frm_filmy_zalukajtv():
                  pageData = self.urlhelper.getMatches(playerUrl, '<iframe src="(.*?)" width=".*?" height=".*?" frameborder="0" scrolling="no"></iframe>', ["id"], True)
                  links["Wersja 1"] = pageData.first["id"]
         else:
-            pageData = self.urlhelper.getMatches(url, '<a style="color:white;font-size:20px;font-weight:bold;" href="(.*?)" target="_blank">', ['id'], True)
+            pageData = self.urlhelper.getMatches(url, 'bold;" href="(.*?)" target="_blank">Ogladaj', ['id'], True)
             links["Wersja 1"] = pageData.first["id"]
 
         return links
