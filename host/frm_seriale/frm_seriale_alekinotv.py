@@ -37,7 +37,7 @@ class frm_seriale_alekinotv():
         return array    
 
     def search(self, searchString):
-       return self.urlhelper.getMatches2(self.mainUrl + '/szukaj?query='+ urllib.quote_plus(searchString), '<!-- Znalezione seriale -->(?P<group>.*?)<!-- /Znalezione seriale -->','<img src="(.*?)".*?</a>\s*?<a href="(.*?)" class="en pl-white">(.*?)</a>', ['imgUrl', 'url', 'title', 'description', ])
+       return self.urlhelper.getMatches2(self.mainUrl + '/szukaj?query='+ urllib.quote_plus(searchString), '<div class="p10"></div>.*?<!-- Znalezione seriale -->(?P<group>.*?)<!-- /Znalezione seriale -->','<img src="(.*?)".*?</a>\s*?<a href="(.*?)" class="en pl-white">(.*?)</a>', ['imgUrl', 'url', 'title', 'description', ])
  
    # server links for video
     def getPlaySource(self, url):

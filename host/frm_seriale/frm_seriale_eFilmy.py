@@ -28,8 +28,8 @@ class frm_seriale_eFilmy():
     def getEpisodes(self, url):
         print "URLS:::" + url
         array = self.urlhelper.getMatches(url,'<li><a title=".*?" href="([^<]*?)">([^<]*?) <span class="bold">([^<]*?)</span>', ['url','number','title','description'])
-        print "TEST:::" + str(array.items)
-        array.items = reversed(array.items)
+        #print "TEST:::" + str(array.items)
+        array.items = array.items
 
         return array    
 
@@ -63,26 +63,32 @@ class frm_seriale_eFilmy():
 # link  do servera
     def getPlaySource(self, url):
         links = {}
-        pageData = self.urlhelper.getMatches(self.mainUrl + url, '<input class="blue" alt="(.*?)"(.*?<span id="(.*?)" class="playername">(.*?)<img class="shme"|)', ['id','ignore','number','server'])
-        #print "EFILMY::::" + str(pageData.first)
+        
+        pageData = self.urlhelper.getMatches(self.mainUrl + url, 'class="playername"><span>.*?<em>(.*?)</em></span>.*?<em>(.*?)</em></span></div></span>.*?id="play_(.*?)".*?<div id="(.*?)" alt="n" class="embedbg">', ['server', 'version', 'number' ,'id'])
+       # print "EFILMY::::" + str(pageData.first)
         for item in pageData.items:
-            #print "EFILMY222::::" + str(item["id"])
+        #    print "EFILMY222::::" + str(item["id"])
             playerUrl = self.mainUrl + "seriale.php?cmd=show_player&id=" + item["id"]
             pageData = self.urlhelper.getMatches(playerUrl, 'document.write\(Base64.decode\("(.*?)"\)', ["id"], True)
-            #print "EFILMY23232::::" + str(pageData.first)
+         #   print "EFILMY23232::::" + str(pageData.first)
            
             if pageData.first:
                 iframe = base64.b64decode(pageData.first["id"])
-                #print "EFILMY333::::" + str(iframe)
+          #      print "EFILMY333::::" + str(iframe)
             
                 mylink = re.compile('<IFRAME.*?SRC="(.*?)"',re.DOTALL | re.IGNORECASE).findall(iframe)
                 #print "EFILMY444::::" + str(mylink)
             
                 if not item["server"]:
                     item["server"] = "Podstawowy"
-                links[item["server"] + "(" + item["number"] + ")"] = mylink[0]
-            else:
-                d = xbmcgui.Dialog()
-                d.ok('Błąd przy przetwarzaniu.', 'Problem. Wejdź na dowolny film/serial na  ' + self.mainUrl + ' i wpisz captcha !')
-        #print "LINKSSS::: " +  str(links)
+                    item["number"]  = "1"
+                    item["version"]  = "nieznana"
+                
+                links[item["server"] + " - " + item["version"]] = mylink[0]
+           
+        if len(links) == 0:
+            d = xbmcgui.Dialog()
+            d.ok('Błąd przy przetwarzaniu.', 'Problem. Wejdź na dowolny film/serial na  ' + self.mainUrl + ' i wpisz captcha !')
+        #print "
+
         return links

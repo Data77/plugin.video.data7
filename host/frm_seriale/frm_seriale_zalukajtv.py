@@ -43,6 +43,7 @@ class frm_seriale_zalukajtv():
     def search(self, searchString):
        searchString = urllib.quote_plus(searchString) 
        return self.urlhelper.getMatches2(self.mainUrl + '/seriale','<div id="two">(?P<group>.*?)<div class="doln"></div>','<td class="wef32f"><a href="([^<]*?)" title="[^<]*?">([^<]*?'+searchString+'[^<]*?)</a>', ['url', 'title', 'description', 'imgUrl'])
+
 # link  do servera
     def getPlaySource(self, url):
         links = {}
