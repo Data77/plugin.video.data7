@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
-import urllib, urllib2, re, os, sys, math
-import xbmcgui, xbmc, xbmcaddon, xbmcplugin
+import urllib
+import urllib2
+import re
+import os
+import sys
+import math
+import xbmcgui
+import xbmc
+import xbmcaddon
+import xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser, base64
-import json, settings, Parser, cookielib
+import urlparser
+import base64
+import json
+import settings
+import Parser
+import cookielib
 
-scriptID = sys.modules[ "__main__" ].scriptID
+scriptID = sys.modules["__main__"].scriptID
 ptv = xbmcaddon.Addon(scriptID)
 
 HOST = 'Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0'
@@ -17,6 +29,8 @@ class Struct:
     def __init__(self, **entries): self.__dict__.update(entries)
     def __eq__(self, other): return self.__dict__ == other.__dict__
     def __neq__(self, other): return self.__dict__ != other.__dict__
+    def __lt__(self, other):
+        return self.number < other.number
 
 class urlhelper:
     HOST = HOST
@@ -29,14 +43,14 @@ class urlhelper:
 
     def clearString(self,string):
         try:
-            string = urllib.unquote(self.hp.unescape(string))
+            string = self.hp.unescape(urllib.unquote(string))
         except:
             pass
         string = string.replace('<', " ")
         string = string.replace('>', " ")
-        
+        string = string.replace('\\', "/")
         string = string.replace('&#8230;', "-")
-
+        string = string.replace('oacute;', "ó")
         string = string.replace('&#039;', "'")
         string = string.replace('&amp;', "&")
         string = string.replace('&quot;', '"')        
@@ -48,11 +62,14 @@ class urlhelper:
            string = string.replace('  ', ' ')
         return string.strip()
 
-    def getMatches(self, url, regex, array, singleElement = False, postdata = None, headers = None):
+    def getEmpty(self):
+        return Struct(pageData = None, items= [], first = None)
+
+    def getMatches(self, url, regex, array, singleElement=False, postdata=None, headers=None):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True , "headers" : headers}       
         pageData = self.getURLRequestData(query_data,postdata)
         match = re.compile(regex, re.DOTALL | re.IGNORECASE).findall(pageData)
-        returnData = Struct( pageData = pageData, items= [], first = None)
+        returnData = Struct(pageData = pageData, items= [], first = None)
         if not singleElement:
             if len(match) > 0 :			
                 for i in range(len(match)):
@@ -66,9 +83,10 @@ class urlhelper:
                     returnData.items.append(entry)    
         else:
             if len(match) > 0 :			
-                #print "len:::" + 
+                #print "len:::" +
                 for i in range(len(array)):
-                    #print "MATCHES::::" + str(i) + " " + str(match[i]) + " ::: " + array[i]
+                    #print "MATCHES::::" + str(i) + " " + str(match[i]) + " :::
+                    #" + array[i]
                     entry = {}
                     entry[array[i]] = match[i]
                     returnData.items.append(entry)
@@ -77,10 +95,10 @@ class urlhelper:
             returnData.first = returnData.items[0]
         return returnData
 
-    def getMatches2(self, url, prefilterRegex, regex, array, postdata = None, headers = None):
+    def getMatches2(self, url, prefilterRegex, regex, array, postdata=None, headers=None):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True, "headers" : headers }       
         pageData = self.getURLRequestData(query_data, postdata)
-        returnData = Struct( pageData = pageData, items= [])
+        returnData = Struct(pageData = pageData, items= [])
         
         match0 = re.compile(prefilterRegex, re.DOTALL | re.IGNORECASE).findall(pageData)
         
@@ -113,11 +131,11 @@ class urlhelper:
         return retValue
 
     
-    def getURLRequestData(self, params = {}, post_data = None):
+    def getURLRequestData(self, params={}, post_data=None):
         
         def urlOpen(req, customOpeners):
             if len(customOpeners) > 0:
-                opener = urllib2.build_opener( *customOpeners )
+                opener = urllib2.build_opener(*customOpeners)
                 response = opener.open(req)
             else:
                 response = urllib2.urlopen(req)
@@ -126,9 +144,9 @@ class urlhelper:
         cj = cookielib.MozillaCookieJar()
 
         response = None
-        req      = None
+        req = None
         out_data = None
-        opener   = None
+        opener = None
         referer = None
 		
         if 'host' in params:
@@ -153,7 +171,7 @@ class urlhelper:
             params['use_cookie'] = True 
         
         if params.get('use_cookie', False):
-            customOpeners.append( urllib2.HTTPCookieProcessor(cj) )
+            customOpeners.append(urllib2.HTTPCookieProcessor(cj))
             if params.get('load_cookie', True):
                 cj.load(params['cookiefile'], ignore_discard = True)
 

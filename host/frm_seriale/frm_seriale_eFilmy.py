@@ -7,9 +7,9 @@ import json, libCommon2, base64
 
 class frm_seriale_eFilmy():
     def __init__(self):
-        self.mainUrl = "http://www.efilmy.net/" 
+        self.mainUrl = "http://www.efilmy.tv/" 
         self.name = "eFilmy"
-        self.color = "FeE11680"
+        self.color = "BBF156A0"
         self.up = urlparser.urlparser()
         self.displayname = "eFilmy net"
         self.urlhelper = libCommon2.urlhelper()

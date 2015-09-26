@@ -22,6 +22,8 @@ import  settings
 import Parser 
 import json
 import pickle
+import traceback
+import sys
 
 try:
    import StorageServer
@@ -68,6 +70,7 @@ class frm_seriale():
                 # Create an instance of the class
                 instance = loaded_class()
                 self.instances[instance.name] = instance
+                print("LOADING-MODULE::" + str(instance.name))
 
 # Start
     def handleService(self):
@@ -121,7 +124,7 @@ class frm_seriale():
             if self.instances[serviceName].color:
                 color = self.instances[serviceName].color
             for item in sorted(newItems, key=operator.itemgetter("title")):
-                self.add("main-menu-item", serviceName , self.hp.unescape(item["title"]), '[COLOR=' + color + '](' + self.instances[serviceName].displayname + ')[/COLOR] ' + self.urlhelper.clearString(item["title"]), item["imgUrl"] , item["url"], item["description"])
+                self.add("main-menu-item", serviceName , self.urlhelper.clearString(item["title"]), '[COLOR=' + color + '](' + self.instances[serviceName].displayname + ')[/COLOR] ' + self.urlhelper.clearString(item["title"]), item["imgUrl"] , item["url"], item["description"])
                 
             
         xbmcplugin.endOfDirectory(int(sys.argv[1])) 
@@ -194,8 +197,8 @@ class frm_seriale():
                 try:
                     instance = self.instances[serviceName] 
                     foundItems = instance.search(text)  
-                except:
-                    continue
+                except Exception as e:
+                    print serviceName + ".Search: " + str(e) + " :: " + traceback.format_exc()
 
                 color = 'FFeFe690'
                 
