@@ -100,25 +100,13 @@ class frm_seriale():
       
         elements = []
         for serviceName in self.instances:
-            if 1 == 1:
-           #try:
-            
-                #cacheKey =
-                #"xbmc.plugin.vine.cache.frm_seriale.getPopularsSeries5." +
-                #serviceName
+            #if 1 == 1:
+            try:
                 newItems = []
-                #cachedItems = self.cache.get(cacheKey)
-                #if cachedItems:
-                #    newItems = json.loads(cachedItems)
-                #print "CACHE:::: " + str(cachedItems) + " &&&&"
-                #if not newItems:
                 retValue = self.instances[serviceName].getPopular()
                 newItems = retValue.items
-                    #self.cache.set(cacheKey , json.dumps(newItems))
-                    #print "DUMP:::: " +
-                    #str(json.loads(str(json.dumps(newItems)))) + " &&&&"
-            #except:
-            #    continue
+            except:
+                continue
             color = 'FFeFe690'
             
             if self.instances[serviceName].color:
@@ -161,7 +149,7 @@ class frm_seriale():
 
         xbmcplugin.endOfDirectory(int(sys.argv[1])) 
                               
-# play or list sources (lista żródeł - serwerów, jesłi jeden rozpocznij odtwarzenie)
+# play or list sources (lista żródeł - serwerów, jesli jeden rozpocznij odtwarzenie)
     def addSourcesOrPlay(self,params):
         instance = self.instances[params['category']]
         videoUrls = instance.getPlaySource(urllib.unquote(params['url']))
@@ -178,25 +166,32 @@ class frm_seriale():
  # play   
     def playItem(self,params,videoUrl=''):
         if videoUrl:
-            #print "NOT PLAYYY::: " + videoUrl + "  $$$$$$$$$$$ " + urllib.unquote(params['url']) + " *** " + urllib.unquote(params['series_title'])
             self.LOAD_AND_PLAY_VIDEO(videoUrl, urllib.unquote(params['series_title'] + ' - ' + params['title']), urllib.unquote(params['icon']))
         else:
-            #print "PLAYYY::: " + urllib.unquote(params['url']) + " *** " + urllib.unquote(params['series_title'])
-                 
             self.LOAD_AND_PLAY_VIDEO(urllib.unquote(params['url']), urllib.unquote(params['series_title']), urllib.unquote(params['icon']))
 
 # Search
     def search(self,params):
-        text = None
-        k = xbmc.Keyboard()
-        k.doModal()
-        if (k.isConfirmed()):
-            text = urllib.quote_plus(k.getText())
-        if text:
+        
+        searchString=''
+
+        if params.has_key("filtrowanie"):
+            searchString = params["filtrowanie"]
+
+        if not searchString:
+            params["filtrowanie"] = []
+            k = xbmc.Keyboard()
+            k.doModal()
+            if (k.isConfirmed()):
+                searchString= urllib.quote_plus(k.getText())
+        
+        if searchString:
+            self.add("main-menu-search-item", '' , '', 'Szukaj: [COLOR=white]\'' + searchString +'\'[/COLOR]','' ,'', '','',True,True,'',searchString)  
+
             for serviceName in self.instances:
                 try:
                     instance = self.instances[serviceName] 
-                    foundItems = instance.search(text)  
+                    foundItems = instance.search(searchString)  
                 except Exception as e:
                     print serviceName + ".Search: " + str(e) + " :: " + traceback.format_exc()
 
