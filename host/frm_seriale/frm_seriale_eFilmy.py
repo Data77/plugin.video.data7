@@ -75,11 +75,6 @@ class frm_seriale_eFilmy():
             
                 mylink = re.compile('<IFRAME.*?SRC="(.*?)"',re.DOTALL | re.IGNORECASE).findall(iframe)
                 
-                if "efilmy" in mylink[0]:
-                    pageData = self.urlhelper.getMatches(mylink[0], ' <div id="playerVidzer">.*?<a href="(.*?)" .*?</a>', ["id"], True)
-                    if pageData.first:
-                        mylink[0] = pageData.first["id"]               
-
                 if not item["server"]:
                     item["server"] = "Podstawowy"
                     item["number"]  = "1"

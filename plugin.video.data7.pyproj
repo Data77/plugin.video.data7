@@ -36,6 +36,7 @@
     <Compile Include="host\frm_seriale.py" />
     <Compile Include="host\frm_filmy\frm_filmy_alekinotv.py" />
     <Compile Include="host\frm_seriale\frm_seriale_alekinotv.py" />
+    <Compile Include="host\frm_seriale\frm_seriale_seriestv.py" />
     <Compile Include="host\frm_seriale\frm_seriale_allTube.py" />
     <Compile Include="host\frm_seriale\frm_seriale_eFilmy.py" />
     <Compile Include="host\frm_seriale\frm_seriale_zalukajtv.py" />

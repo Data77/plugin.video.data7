@@ -157,8 +157,7 @@ class frm_seriale():
         if len(videoUrls) == 1:
             self.playItem(params,videoUrls.itervalues().next())
         else:
-            for key in videoUrls:
-                print "URLS::: " + str(key) + " *** " + str(videoUrls[key])
+            for key in sorted(videoUrls):
                 self.add("source-server-item", urllib.unquote(params['category']), urllib.unquote(params['series_title'] + ' - ' + params['title']), key, urllib.unquote(params['icon']), videoUrls[key])
        
             xbmcplugin.endOfDirectory(int(sys.argv[1])) 

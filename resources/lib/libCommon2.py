@@ -9,8 +9,6 @@ import xbmcgui
 import xbmc
 import xbmcaddon
 import xbmcplugin
-from urlparse import urlparse, parse_qs
-import urlparser
 import base64
 import json
 import settings
@@ -39,7 +37,6 @@ class urlhelper:
     def __init__(self):
         self.settings = settings.TVSettings()
         self.parser = Parser.Parser()
-        self.up = urlparser.urlparser()
 
     def clearString(self,string):
         try:
@@ -50,6 +47,7 @@ class urlhelper:
         string = string.replace('>', " ")
         string = string.replace('\\', "/")
         string = string.replace('&#8230;', "-")
+        string = string.replace('8217', "'")
         string = string.replace('oacute;', "ó")
         string = string.replace('&#039;', "'")
         string = string.replace('&amp;', "&")
