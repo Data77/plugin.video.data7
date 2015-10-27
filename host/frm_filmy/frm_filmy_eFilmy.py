@@ -41,7 +41,7 @@ class frm_filmy_eFilmy():
        # print "EFILMY::::" + str(pageData.first)
         for item in pageData.items:
         #    print "EFILMY222::::" + str(item["id"])
-            playerUrl = self.mainUrl + "seriale.php?cmd=show_player&id=" + item["id"]
+            playerUrl = self.mainUrl + "filmy.php?cmd=show_player&id=" + item["id"]
             pageData = self.urlhelper.getMatches(playerUrl, 'document.write\(Base64.decode\("(.*?)"\)', ["id"], True)
          #   print "EFILMY23232::::" + str(pageData.first)
            
@@ -61,6 +61,5 @@ class frm_filmy_eFilmy():
         if len(links) == 0:
             d = xbmcgui.Dialog()
             d.ok('Błąd przy przetwarzaniu.', 'Problem. Wejdź na dowolny film/serial na  ' + self.mainUrl + ' i wpisz captcha !')
-        #print "
-
+        
         return links
