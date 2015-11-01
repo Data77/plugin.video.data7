@@ -1,6 +1,8 @@
 ﻿import mrknow_urlparser
 import re
 import libCommon2
+import time
+
 try:
     import urlresolver
 except ImportError:
@@ -32,10 +34,10 @@ class urlparser:
 
     def getVideoLink(self, url,referer=''):
         host = self.getHostName(url)
-        print "## Url to resolve in UrlParser(host:" +host +"): " + str(url)
+        print "## Url to resolve in UrlParser(host:" + host + "): " + str(url)
 
         
-        returnUrl =''
+        returnUrl = ''
         #streamin fix
         if host == 'streamin.to':
             url = url.replace('/video','')
@@ -59,8 +61,9 @@ class urlparser:
             url = url.replace('/video/','/embed/')
             url = url.replace('watch_video.php?v=','')
 
-
-            returnUrl;
+        if host.endswith('dwn.so'):
+            url = self.resolveDwnSo(url)
+            return url
 
         if returnUrl != '':
             print "## Url found in my UrlParser: " + str(returnUrl)
@@ -73,7 +76,7 @@ class urlparser:
         except:
             pass
         # unknow sources
-        if nUrl=='' or nUrl==url:        
+        if nUrl == '' or nUrl == url:        
             nnUrl = urlresolver.resolve(url) 
             if nnUrl == False:
                 nUrl = url
@@ -83,3 +86,27 @@ class urlparser:
 
         print "## Url found in UrlParser: " + str(nUrl)
         return nUrl	
+
+    def resolveDwnSo(self, url,referer=''):
+        print "resolveDwnSo0::::" + str(url)
+        
+        pageData = self.urlhelper.getMatches(url, "SWFObject\('http://st.dwn.so/player/play4.swf\?v=(.*?)\&yk=(.*?)','.*?','(.*?)','.*?','.*?'\);", ['ds','yk','width'])
+        nUrl = ''
+        
+        print "resolveDwnSo1::::" + str(pageData.first)
+
+        if pageData.first:
+            timestamp = int(time.time())
+
+            self.urlhelper.getMatches('http://st.dwn.so/xml/second.php?uid=' + str(timestamp) + '&regular=1', '(.*?)', ['url'],True, postdata = None, headers = None, referer = url)
+
+
+            nUrl = 'http://st.dwn.so/xml/videolink.php?v=' + pageData.first['ds'] + '&yk=' + pageData.first['yk'] + '&width=' + pageData.first['width'] + '&id=' + str(timestamp) + '&u=undefined' 
+
+            pageData = self.urlhelper.getMatches(nUrl, 'un="(.*?)"', ['url'],True)
+
+            print "resolveDwnSo2::::" + str(pageData.first)
+            if pageData.first:
+                nUrl = pageData.first["url"] 
+
+        return nUrl

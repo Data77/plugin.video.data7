@@ -63,9 +63,9 @@ class urlhelper:
     def getEmpty(self):
         return Struct(pageData = None, items= [], first = None)
 
-    def getMatches(self, url, regex, array, singleElement=False, postdata=None, headers=None):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True , "headers" : headers}       
-        pageData = self.getURLRequestData(query_data,postdata)
+    def getMatches(self, url, regex, array, singleElement=False, postdata=None, headers=None, referer = None):
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True , "headers" : headers,"referer" : referer}       
+        pageData = self.getURLRequestData(query_data, postdata)
         match = re.compile(regex, re.DOTALL | re.IGNORECASE).findall(pageData)
         returnData = Struct(pageData = pageData, items= [], first = None)
         if not singleElement:
@@ -93,8 +93,8 @@ class urlhelper:
             returnData.first = returnData.items[0]
         return returnData
 
-    def getMatches2(self, url, prefilterRegex, regex, array, postdata=None, headers=None):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True, "headers" : headers }       
+    def getMatches2(self, url, prefilterRegex, regex, array, postdata=None, headers=None, referer=None):
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'save_cookie': False, 'load_cookie': False, 'use_post': True, 'return_data': True, "headers" : headers, "referer" : referer }       
         pageData = self.getURLRequestData(query_data, postdata)
         returnData = Struct(pageData = pageData, items= [])
         

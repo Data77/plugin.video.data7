@@ -62,5 +62,5 @@ class frm_seriale_zalukajtv():
         else:
             pageData = self.urlhelper.getMatches(url, 'bold;" href="(.*?)" target="_blank">Ogladaj', ['id'], True)
             links["Wersja 1"] = pageData.first["id"]
-
+        print "ZALUKAJ::" + str(links)  
         return links

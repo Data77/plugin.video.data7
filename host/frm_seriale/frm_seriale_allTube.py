@@ -44,16 +44,17 @@ class frm_seriale_allTube():
 # search - lista z pierwszej strony ( po prawej)
     def search(self, searchString):
        postdata = {"search" : searchString.replace("+", " ") }
-       return self.urlhelper.getMatches2(self.mainUrl + '/szukaj','.*','<a href="([^<]*?serial[^<]*?)"><img src="(.*?)".*?><p><b>(.*?)</b>', ['url','imgUrl', 'title','description'], postdata)
+       return self.urlhelper.getMatches2(self.mainUrl + '/szukaj','.*','<a href="(([^<]*?)/serial/([^<]*?))">(.*?)</a>', ['url', 'n1','n2', 'title','imgUrl', 'description'], postdata)
        
 
 # link do servera
     def getPlaySource(self, url):
         links = {}
         
-        pageData = self.urlhelper.getMatches(url, '<tr>.*?alt=".*?">(.*?)</td>.*?<td><img src=".*?">(.*?)</td>.*?data-urlhost="(.*?)"', ['server', 'version', 'url'])
-        
+        pageData = self.urlhelper.getMatches(url, '<tr>.*?<td>[^>]*?>([^>]*?)</td>[^>]*?<td>([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="[^>]*?".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server', 'version', 'url', 'percent'])
+      
+
         for item in pageData.items:
-            links[item["server"] + " - " + item["version"]] = item["url"]
+            links[item["server"] + " - " + item["version"] + ' (' + item["percent"] +'%)' ] = item["url"]
         
         return links
