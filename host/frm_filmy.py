@@ -93,9 +93,11 @@ class frm_filmy():
         self.queue = Queue.LifoQueue()
 
         for serviceName in self.instances:
+            try:
             #self.queue.put(serviceName)
-            self.getPopularA(serviceName)
-
+                self.getPopularA(serviceName)
+            except:
+                continue
         #tasksCount = len(self.instances)
         
         #for i in range(tasksCount * 2): # aka number of threadtex

@@ -27,7 +27,7 @@ class frm_filmy_allTube():
 
 # lista z pierwszej strony
     def getPopular(self):
-        result = self.urlhelper.getMatches2(self.mainUrl,'<h2>ostatnio dodane Filmy</h2>(.*?)<h2>','<img src="(.*?)"></a></div>.*?<div class="title"><a href="(.*?)">(.*?)</a></div>', ['imgUrl','url','title','description'])
+        result = self.urlhelper.getMatches2(self.mainUrl,'<h2>ostatnio dodane Filmy</h2>(.*?)<h2>','<div class="row">.*?<a href="([^<]*?)">.*?<img src="([^<]*?)"[^<]*?class="img-responsive">.*?<h3>([^<]*?)</h3>', ['url','imgUrl','title','description'])
         return result 
 
 # search - lista z pierwszej strony ( po prawej)
