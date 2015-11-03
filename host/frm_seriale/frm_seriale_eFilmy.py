@@ -39,11 +39,8 @@ class frm_seriale_eFilmy():
 
 # lista odcinków - jeden request per sezon
     def getEpisodes(self, url):
-        print "URLS:::" + url
         array = self.urlhelper.getMatches(url,'<li><a title=".*?" href="([^<]*?)">([^<]*?) <span class="bold">([^<]*?)</span>', ['url','number','title','description'])
-        #print "TEST:::" + str(array.items)
-        array.items = array.items
-
+        array.items = reversed(sorted(array.items, key=lambda k: k['number']) )
         return array    
 
     def getAlphabetic(self, letters):
@@ -63,15 +60,13 @@ class frm_seriale_eFilmy():
 
 # search - lista z pierwszej strony ( po prawej)
     def search(self, searchString):
-        searchString = urllib.quote_plus(searchString).lower() 
-        retValue = self.urlhelper.getMatches(self.mainUrl + '/js/menu.js','var serials_pl =\[(.*?)\];\s*?var serials_seo =\[(.*?)\];', ['titles', 'links'])
-        titles = str(retValue.items[0]["titles"]).split('",')        
-        links = str(retValue.items[0]["links"]).split('",')
-        items = []
-        for i in range(len(titles)):
-            if searchString in titles[i].lower():
-               items.append({"url":self.mainUrl + "serial," + links[i].lstrip('"') + ".html", "title" : titles[i].lstrip('"'), "description" : "", "imgUrl" : "" })
-        retValue.items = items
+
+        retValue = self.urlhelper.getMatches(self.mainUrl + '/autocomm.php?query=' + urllib.quote_plus(searchString) ,'{[^}]*?"value":"([^}]*?)"[^}]*?"data":"([^}]*?)"[^}]*?"image":"([^}]*?)"[^}]*?"t":"s"[^}]*?}', ['title', 'url', "imgUrl", "description"])
+        for item in retValue.items:
+            item["imgUrl"] = self.mainUrl + "/" + item["imgUrl"].replace("\\","")
+            item["title"] = self.urlhelper.clearString(item["title"])
+            item["url"] = self.mainUrl + "/" + item["url"].replace("\\","")
+
         return retValue
 
 # link do servera

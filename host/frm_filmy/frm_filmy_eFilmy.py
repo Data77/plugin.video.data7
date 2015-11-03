@@ -1,9 +1,20 @@
 # -*- coding: utf-8 -*-
-import urllib, urllib2, re, os, sys, math
-import xbmcgui, xbmc, xbmcaddon, xbmcplugin
+import urllib
+import urllib2
+import re
+import os
+import sys
+import math
+import xbmcgui
+import xbmc
+import xbmcaddon
+import xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser, base64
-import json, libCommon2, base64
+import urlparser
+import base64
+import json
+import libCommon2
+import base64
 
 class frm_filmy_eFilmy():
     def __init__(self):
@@ -14,26 +25,26 @@ class frm_filmy_eFilmy():
         self.displayname = "eFilmy net"
         self.urlhelper = libCommon2.urlhelper()
 
-# lista z pierwszej strony    
+# lista z pierwszej strony
     def getPopular(self):
         #self.mainUrl + "/filmy,p1.html", self.mainUrl + "/filmy,p2.html"
-        retValue = self.urlhelper.getMatches3([self.mainUrl + "/filmy,sort-date-DESC.html",self.mainUrl + "/filmy,p1.html" ],'.*',  '<a title="Film ([^<]*?) online" href="([^<]*?)"><img class="poster" src="([^<]*?)" alt="[^<]*?" pagespeed_url_hash=', ['title', 'url', 'imgUrl', 'description'])
+        retValue = self.urlhelper.getMatches3([self.mainUrl + "/filmy,sort-date-DESC.html",self.mainUrl + "/filmy,p1.html"],'.*',  '<a title="Film ([^<]*?) online" href="([^<]*?)"><img class="poster" src="([^<]*?)" alt="[^<]*?" pagespeed_url_hash=', ['title', 'url', 'imgUrl', 'description'])
         if retValue.items:
             for item in retValue.items:
                 item["imgUrl"] = self.mainUrl + item["imgUrl"] 
 
         return retValue
      
-# search - lista z pierwszej strony ( po prawej)    
+# search - lista z pierwszej strony ( po prawej)
     def search(self, searchString):
-       postdata = {"word" : urllib.quote_plus(searchString) }
-       retValue = self.urlhelper.getMatches2(self.mainUrl + '/szukaj.html','.*','<a href="([^<]*?)"><img class="poster" src="([^<]*?)"><a>\s*?<a href="[^<]*?" class="title_pl">([^<]*?)</a>', ['url', 'imgUrl', 'title', 'description'], postdata)
-       if retValue.items:
-            for item in retValue.items:
-                item["imgUrl"] = self.mainUrl + item["imgUrl"] 
-       return retValue
+        retValue = self.urlhelper.getMatches(self.mainUrl + '/autocomm.php?query=' + urllib.quote_plus(searchString) ,'{[^}]*?"value":"([^}]*?)"[^}]*?"data":"([^}]*?)"[^}]*?"image":"([^}]*?)"[^}]*?"t":"m"[^}]*?}', ['title', 'url', "imgUrl", "description"])
+        for item in retValue.items:
+            item["imgUrl"] = self.mainUrl + "/" + item["imgUrl"].replace("\\","")
+            item["title"] = self.urlhelper.clearString(item["title"])
 
-# link  do servera
+        return retValue
+
+# link do servera
     def getPlaySource(self, url):
         links = {}
         
@@ -53,8 +64,8 @@ class frm_filmy_eFilmy():
                 
                 if not item["server"]:
                     item["server"] = "Podstawowy"
-                    item["number"]  = "1"
-                    item["version"]  = "nieznana"
+                    item["number"] = "1"
+                    item["version"] = "nieznana"
                 
                 links[item["server"] + " - " + item["version"]] = mylink[0]
            

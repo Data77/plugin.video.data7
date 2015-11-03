@@ -30,7 +30,7 @@ class frm_seriale_zalukajtv():
         if array.first:
             url = array.first["url"]
         
-        array = self.urlhelper.getMatches2(url, '<div id="sezony"(?P<group>.*?)<div class="doln2"></div>', '<a class="sezon" href="(.*?)">(.*?)</a>', ['url','title'])
+        array = self.urlhelper.getMatches2(url, '<div id="sezony"(?P<group>.*?)<div class="doln2"></div>', '<a class="sezon" href="([^"]*?)"[^>]*?>(.*?)</a>', ['url','title'])
         list = []
         for item in array.items:
             res =  self.urlhelper.getMatches2(self.mainUrl + item["url"], '<div id="odcinkicat">(?P<group>.*?)<div class="doln2">','<div align="left" id="sezony".*?>(.*?)<a href="(.*?)" title="(.*?)">', ['number', 'url', 'title','description'])

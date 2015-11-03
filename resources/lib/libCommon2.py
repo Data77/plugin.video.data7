@@ -43,6 +43,20 @@ class urlhelper:
             string = self.hp.unescape(urllib.unquote(string))
         except:
             pass
+
+        string = string.replace('/u0144', "ń")
+        string = string.replace('/u0142', "ł")
+        string = string.replace('/u017c', "ż")
+        string = string.replace('/u00f3', "ó")
+        string = string.replace('/u017a', "ź")
+        string = string.replace('/u0107', "ć")
+        string = string.replace('/u0119', "ę")
+        string = string.replace('/u015b', "ś")
+        string = string.replace('/u0105', "ą")
+
+
+
+
         string = string.replace('<', " ")
         string = string.replace('>', " ")
         string = string.replace('\\', "/")
