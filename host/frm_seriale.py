@@ -193,13 +193,14 @@ class frm_seriale():
                     foundItems = instance.search(searchString)  
                 except Exception as e:
                     print serviceName + ".Search: " + str(e) + " :: " + traceback.format_exc()
+                    continue
 
                 color = 'FFeFe690'
                 
                 if self.instances[serviceName].color:
                     color = self.instances[serviceName].color
                 
-                if foundItems.items:   
+                if foundItems and foundItems.items:   
                     for item in sorted(foundItems.items, key=operator.itemgetter("title")):
                         self.add("main-menu-item", serviceName , self.urlhelper.clearString(item["title"]), '[COLOR=' + color + '](' + self.instances[serviceName].displayname + ')[/COLOR] ' + self.urlhelper.clearString(item["title"]), item["imgUrl"] , item["url"], item["description"])  
 

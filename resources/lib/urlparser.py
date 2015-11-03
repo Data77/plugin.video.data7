@@ -64,6 +64,9 @@ class urlparser:
         if host.endswith('dwn.so'):
             url = self.resolveDwnSo(url)
             return url
+        if host.endswith('allmyvideos.net'):
+            url = self.resolveAllmyvideosNet(url)
+            return url
 
         if returnUrl != '':
             print "## Url found in my UrlParser: " + str(returnUrl)
@@ -86,6 +89,11 @@ class urlparser:
 
         print "## Url found in UrlParser: " + str(nUrl)
         return nUrl	
+
+    def resolveAllmyvideosNet(self, url,referer=''):
+        pageData = self.urlhelper.getMatches(url, '"file" : "(.*?)"', ['url'], True)
+        if pageData.first:
+            return pageData.first['url']
 
     def resolveDwnSo(self, url,referer=''):
         print "resolveDwnSo0::::" + str(url)

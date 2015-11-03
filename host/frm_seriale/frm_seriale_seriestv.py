@@ -64,7 +64,7 @@ class frm_seriale_seriestv():
     def getPlaySource(self, url):
         links = {}
         
-        pageData = self.urlhelper.getMatches(url, '<b>(.*?)</b></span><br />.*?<IFRAME SRC="(.*?)" [^<]*?></IFRAME><br />', ['server', 'url'])
+        pageData = self.urlhelper.getMatches(url, '<b>(.*?)</b></span><br />.*?<IFRAME SRC="(.*?)" [^>]*?></IFRAME>', ['server', 'url'])
         i = 0
         for item in pageData.items:
             i = i + 1 

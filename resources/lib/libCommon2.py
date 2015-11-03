@@ -224,7 +224,27 @@ class urlhelper:
             cj.save(params['cookiefile'], ignore_discard = True)
 
         return out_data 
-               
+        
+    def get_captcha(self, imgUrl):
+        try:
+            img = xbmcgui.ControlImage(450, 0, 400, 130, imgUrl)
+            wdlg = xbmcgui.WindowDialog()
+            wdlg.addControl(img)
+            wdlg.show()
+            xbmc.sleep(500)
+            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+            kb.doModal()
+            if (kb.isConfirmed()):
+                solution = kb.getText()
+                if solution == '':
+                    raise Exception('You must enter text in the image to access video')
+                else:
+                    return solution
+            else:
+                raise Exception('Captcha Error')
+        finally:
+            wdlg.close()
+       
 
 
 
