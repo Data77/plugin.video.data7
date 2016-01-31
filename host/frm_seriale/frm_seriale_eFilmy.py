@@ -29,6 +29,7 @@ class frm_seriale_eFilmy():
 
 # lista z pierwszej strony
     def getPopular(self):
+        return ""
         retValue = self.urlhelper.getMatches2(self.mainUrl + "/seriale.html",'<div class="prawo-kontener">(?P<group>.*?)<div class="pagin">',  '<a class="overimage" href="(.*?).html">(.*?)</a>.*?class="sposter" src="(.*?)" pagespeed_url_hash', ['url','title','imgUrl', 'description'])
         if retValue.items:
             for item in retValue.items:

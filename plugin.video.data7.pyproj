@@ -42,7 +42,7 @@
     <Compile Include="host\frm_seriale\frm_seriale_zalukajtv.py" />
     <Compile Include="resources\lib\BeautifulSoup.py" />
     <Compile Include="resources\lib\libCommon2.py" />
-    <Compile Include="resources\lib\Parser.py" />
+    <Compile Include="resources\lib\UParser.py" />
     <Compile Include="resources\lib\Player.py" />
     <Compile Include="resources\lib\settings.py" />
     <Compile Include="resources\lib\urlparser.py" />

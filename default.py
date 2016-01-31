@@ -15,7 +15,7 @@ sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
 
 import frm_seriale,frm_filmy
-import Parser
+import UParser
         
 
 class data7Films:
@@ -24,7 +24,7 @@ class data7Films:
         sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
         sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
         #self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = UParser.UParser()
 
     def showListOptions(self):
         params = self.parser.getParams()

@@ -5,7 +5,7 @@ import urllib, urllib2
 scriptID = sys.modules[ "__main__" ].scriptID
 scriptname = "data7 Polish films online"
 
-class Parser:
+class UParser:
     def __init__(self):
         pass
     

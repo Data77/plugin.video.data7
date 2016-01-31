@@ -12,7 +12,7 @@ import xbmcplugin
 import base64
 import json
 import settings
-import Parser
+import UParser
 import cookielib
 
 scriptID = sys.modules["__main__"].scriptID
@@ -36,7 +36,7 @@ class urlhelper:
 	
     def __init__(self):
         self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = UParser.UParser()
 
     def clearString(self,string):
         try:

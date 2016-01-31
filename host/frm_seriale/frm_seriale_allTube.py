@@ -27,7 +27,7 @@ class frm_seriale_allTube():
 
 # lista z pierwszej strony
     def getPopular(self):
-        result = self.urlhelper.getMatches2(self.mainUrl,'<h2>ostatnio dodane seriale</h2>(.*?)<div class="col-sm-4">','<img src="(.*?)"></a></div>.*?<div class="title"><a href="(.*?)">(.*?)</a></div>', ['imgUrl','url','title','description'])
+        result = self.urlhelper.getMatches2(self.mainUrl,'Ostatnio dodane seriale(.*?)<div class="col-sm-4">','<a href="([^"]*?)">.*?<img src="([^"]*?)"[^>]*?alt="([^"]*?)"', ['url', 'imgUrl','title','description'])
         return result 
 
 # lista odcinków - jeden request per sezon
@@ -51,10 +51,11 @@ class frm_seriale_allTube():
     def getPlaySource(self, url):
         links = {}
         
-        pageData = self.urlhelper.getMatches(url, '<tr>.*?<td>[^>]*?>([^>]*?)</td>[^>]*?<td>([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="[^>]*?".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server', 'version', 'url', 'percent'])
+        pageData = self.urlhelper.getMatches(url, '([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="([^>]*?)".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server',  'url', 'version', 'percent'])
       
-
+        i = 0
         for item in pageData.items:
-            links[item["server"] + " - " + item["version"] + ' (' + item["percent"] +'%)' ] = item["url"]
+            i=i+1
+            links[str(i) + '. ' +item["server"] + " - " + item["version"] + ' (' + item["percent"] +'%)' ] = item["url"]
         
         return links

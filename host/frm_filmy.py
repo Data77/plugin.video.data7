@@ -16,7 +16,7 @@ import urlparser
 
 import base64
 import settings
-import Parser
+import UParser
 import json
 import pickle
 import Queue
@@ -38,7 +38,7 @@ sys.path.append(os.path.join(BASE_RESOURCE_PATH, "lib"))
 class frm_filmy():
     def __init__(self):
         self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = UParser.UParser()
         self.up = urlparser.urlparser()
         #self.cm = data7_pCommon.common()
         #self.pl = data7_Player.data7_Player()

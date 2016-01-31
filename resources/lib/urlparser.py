@@ -1,18 +1,29 @@
-﻿import mrknow_urlparser
-import re
+﻿import re
 import libCommon2
 import time
 
+#import resolver
+
 try:
     import urlresolver
-except ImportError:
+except:
     print 'No urlresolver module'
 
+try:
+    import mrknow_urlparser
+except:
+    print 'No mrknow_urlparser module'
+	
 
 class urlparser:
     def __init__(self):
-        self.up = mrknow_urlparser.mrknow_urlparser()
-        self.urlhelper = libCommon2.urlhelper()
+		try:
+			self.up = mrknow_urlparser.mrknow_urlparser()
+		
+		except:
+			print 'No urlresolver module'
+		
+		self.urlhelper = libCommon2.urlhelper()
 
 
     def getHostName(self, url, nameOnly=False):
@@ -78,6 +89,17 @@ class urlparser:
             print "## Url found in mrKnowUrlParser: " + str(url)
         except:
             pass
+
+        #if nUrl == '' or nUrl == url:        
+        #    nnUrl = resolver.resolve(url) 
+        #    if nnUrl == False or nnUrl == None:
+        #        nUrl = url
+        #    else:
+        #        print "FFFOOUUNNNT: " + str(nnUrl)
+        #        nUrl = nnUrl[0]
+        #    print "Unknow source url: " + str(nnUrl)
+
+
         # unknow sources
         if nUrl == '' or nUrl == url:        
             nnUrl = urlresolver.resolve(url) 

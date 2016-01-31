@@ -40,7 +40,7 @@ class frm_filmy_allTube():
     def getPlaySource(self, url):
         links = {}
         
-        pageData = self.urlhelper.getMatches(url, '<tr>.*?<td>[^>]*?>([^>]*?)</td>[^>]*?<td>([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="[^>]*?".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server', 'version', 'url', 'percent'])
+        pageData = self.urlhelper.getMatches(url, '([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="([^>]*?)".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server',  'url', 'version', 'percent'])
       
 
         for item in pageData.items:
