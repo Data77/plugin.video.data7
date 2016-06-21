@@ -226,7 +226,11 @@ class frm_seriale():
 # play video
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok = True
-        videoUrl = self.up.getVideoLink(videoUrl)
+        result = self.up.getVideoLink(videoUrl) 
+        
+        videoUrl = result["video"]
+        subUrl = result["subtitles"]
+        
         if videoUrl == '':
                 d = xbmcgui.Dialog()
                 d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
@@ -236,12 +240,17 @@ class frm_seriale():
         try:
             xbmcPlayer = xbmc.Player()
             xbmcPlayer.play(videoUrl, liz)
-            
+            xbmc.sleep(500)
+
             if not xbmc.Player().isPlaying():
-                xbmc.sleep(100)
+                xbmc.sleep(1000)
                 xbmcPlayer.setSubtitles(title)
-                #xbmcPlayer.play(url, liz)
+                xbmcPlayer.play(videoUrl, liz)
             
+            if subUrl:
+                xbmc.sleep(10000)
+                xbmcPlayer.setSubtitles(subUrl)
+
         except:
             d = xbmcgui.Dialog()
             d.ok('Błąd przy przetwarzaniu.', 'Problem')        

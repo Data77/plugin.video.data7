@@ -27,7 +27,7 @@ class frm_filmy_allTube():
 
 # lista z pierwszej strony
     def getPopular(self):
-        result = self.urlhelper.getMatches2(self.mainUrl,'<h2>ostatnio dodane Filmy</h2>(.*?)<h2>','<div class="row">.*?<a href="([^<]*?)">.*?<img src="([^<]*?)"[^<]*?class="img-responsive">.*?<h3>([^<]*?)</h3>', ['url','imgUrl','title','description'])
+        result = self.urlhelper.getMatches2(self.mainUrl+'/filmy-online/','(.*)','<div class="row">.*?<a href="([^<]*?)">.*?<img src="([^<]*?)"[^<]*?class="img-responsive">.*?<h3>([^<]*?)</h3>', ['url','imgUrl','title','description'])
         return result 
 
 # search - lista z pierwszej strony ( po prawej)
@@ -39,11 +39,15 @@ class frm_filmy_allTube():
 # link do servera
     def getPlaySource(self, url):
         links = {}
+          
+        pageData = self.urlhelper.getMatches(url, '<img src="[^>]*?" alt="([^>]*?)">.*?a class="watch" data-iframe="([^"]*?)" data-version="([^"]*?)" data-short.*?<div class="rate">([^<]*?)</div>', ['server',  'url', 'version', 'percent'])  
         
-        pageData = self.urlhelper.getMatches(url, '([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="([^>]*?)".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server',  'url', 'version', 'percent'])
-      
-
+        i = 0
         for item in pageData.items:
-            links[item["server"] + " - " + item["version"] + ' (' + item["percent"] +'%)' ] = item["url"]
+            i=i+1
+            num = str(i)
+            if i<10:
+                num = "0"+str(i)
+            links[num + '. ' +item["server"] + " - " + item["version"] + ' (' + item["percent"] +')' ] =  base64.b64decode(item["url"])
         
         return links

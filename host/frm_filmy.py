@@ -146,11 +146,11 @@ class frm_filmy():
         if len(videoUrls) == 1:
             self.playItem(params,videoUrls.itervalues().next())
         else:
-            for key in videoUrls:
-                print "URLS::: " + str(key) + " *** " + str(videoUrls[key])
+            for key in sorted(videoUrls):
+                print "URL::: " + str(key) + " *** " + str(videoUrls[key])
                 self.add("source-server-item", urllib.unquote(params['category']), urllib.unquote(params['series_title'] + ' - ' + params['title']), key, urllib.unquote(params['icon']), videoUrls[key])
        
-                xbmcplugin.endOfDirectory(int(sys.argv[1])) 
+            xbmcplugin.endOfDirectory(int(sys.argv[1])) 
         
  # play
     def playItem(self,params,videoUrl=''):
@@ -233,8 +233,12 @@ class frm_filmy():
         ok = True
         print "@@@@URL FOUND: " + str(videoUrl)
         
-        videoUrl = self.up.getVideoLink(videoUrl) 
-        
+        result = self.up.getVideoLink(videoUrl) 
+        print "@@@@VIDEO RSULR FOUND: " + str(result)        
+
+        videoUrl = result["video"]
+        subUrl = result["subtitles"]
+ 
         print "@@@@VIDEO LINK FOUND: " + str(videoUrl)
         
         if videoUrl == '':
@@ -246,11 +250,16 @@ class frm_filmy():
         try:
             xbmcPlayer = xbmc.Player()
             xbmcPlayer.play(videoUrl, liz)
-            
+            xbmc.sleep(500)
+
             if not xbmc.Player().isPlaying():
                 xbmc.sleep(1000)
-                #xbmcPlayer.play(url, liz)
-            
+                xbmcPlayer.play(videoUrl, liz)
+
+            if subUrl:
+                xbmc.sleep(10000)
+                xbmcPlayer.setSubtitles(subUrl)
+ 
         except:
             d = xbmcgui.Dialog()
             d.ok('Błąd przy przetwarzaniu.', 'Problem')        

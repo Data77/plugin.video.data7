@@ -193,6 +193,7 @@ class urlhelper:
                 dataPost = post_data
             else:
                 dataPost = urllib.urlencode(post_data)
+            print "POST__DATA"  +str(dataPost)
             req = urllib2.Request(params['url'], dataPost, headers)
         else:
             req = urllib2.Request(params['url'], None, headers)

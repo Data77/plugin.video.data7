@@ -7,7 +7,7 @@ import json, libCommon2
 
 class frm_seriale_zalukajtv():
     def __init__(self):
-        self.mainUrl = "http://zalukaj.tv" 
+        self.mainUrl = "http://zalukaj.com" 
         self.name = "Zalukaj"
         self.color = "e11Fe680"
         self.up = urlparser.urlparser()

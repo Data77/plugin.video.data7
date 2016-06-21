@@ -27,7 +27,7 @@ class frm_seriale_allTube():
 
 # lista z pierwszej strony
     def getPopular(self):
-        result = self.urlhelper.getMatches2(self.mainUrl,'Ostatnio dodane seriale(.*?)<div class="col-sm-4">','<a href="([^"]*?)">.*?<img src="([^"]*?)"[^>]*?alt="([^"]*?)"', ['url', 'imgUrl','title','description'])
+        result = self.urlhelper.getMatches2(self.mainUrl+'seriale-online/','(.*)','<a href="([^"]*?)">.*?<img src="([^"]*?)"[^>]*?alt="([^"]*?)"', ['url', 'imgUrl','title','description'])
         return result 
 
 # lista odcinków - jeden request per sezon
@@ -50,12 +50,15 @@ class frm_seriale_allTube():
 # link do servera
     def getPlaySource(self, url):
         links = {}
-        
-        pageData = self.urlhelper.getMatches(url, '([^>]*?)</td>.*?data-urlhost="([^>]*?)".*?data-version="([^>]*?)".*?<div class="rate">([^>]*?)%</div>.*?</tr>', ['server',  'url', 'version', 'percent'])
+        1
+        pageData = self.urlhelper.getMatches(url, '<img src="[^>]*?" alt="([^>]*?)">.*?a class="watch" data-iframe="([^"]*?)" data-version="([^"]*?)" data-short.*?<div class="rate">([^<]*?)</div>', ['server',  'url', 'version', 'percent'])  
       
         i = 0
         for item in pageData.items:
             i=i+1
-            links[str(i) + '. ' +item["server"] + " - " + item["version"] + ' (' + item["percent"] +'%)' ] = item["url"]
+            num = str(i)
+            if i<10:
+                num = "0"+str(i)
+            links[num + '. ' +item["server"] + " - " + item["version"] + ' (' + item["percent"] +')' ] =  base64.b64decode(item["url"])
         
         return links

@@ -7,7 +7,7 @@ import json, libCommon2
 
 class frm_filmy_zalukajtv():
     def __init__(self):
-        self.mainUrl = "http://zalukaj.tv" 
+        self.mainUrl = "http://zalukaj.com" 
         self.name = "Zalukaj"
         self.color = "e11Fe680"
         self.up = urlparser.urlparser()
@@ -30,16 +30,17 @@ class frm_filmy_zalukajtv():
         pageData = self.urlhelper.getMatches(url, '<iframe allowTransparency="true" src="(.*?)"', ['id'], True)
         if pageData.first:
             playerUrl = self.mainUrl + pageData.first["id"]+"&x=1"
-            pageData = self.urlhelper.getMatches(playerUrl, 'href="(.*?)"><span>(.*?)</span></a>', ["id","title"])
+            pageData = self.urlhelper.getMatches(playerUrl, 'hrefx="(.*?)"><span>(.*?)</span></a>', ["id","title"])
             if pageData.items:
                 for item in pageData.items:
                     pageData = self.urlhelper.getMatches(self.mainUrl + pageData.first["id"]+"&x=1", '<iframe src="(.*?)" width=".*?" height=".*?" frameborder="0" scrolling="no"></iframe>', ["id"], True)
                     links["Wersja " + item["title"]] = pageData.first["id"]
             else:
-                 pageData = self.urlhelper.getMatches(playerUrl, '<iframe src="(.*?)" width=".*?" height=".*?" frameborder="0" scrolling="no"></iframe>', ["id"], True)
+                 pageData = self.urlhelper.getMatches(playerUrl, '<iframe src="(.*?)" width=".*?" height=".*?" frameborder="0" scrolling="no"></(iframe)>', ["id","dummy"])
                  links["Wersja 1"] = pageData.first["id"]
         else:
             pageData = self.urlhelper.getMatches(url, 'bold;" href="(.*?)" target="_blank">Ogladaj', ['id'], True)
             links["Wersja 1"] = pageData.first["id"]
 
+        print " ZALUKAJ"" :INKS FOUND " + str(links)
         return links

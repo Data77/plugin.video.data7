@@ -29,9 +29,9 @@ class Player:
         except:
             d = xbmcgui.Dialog()
             if pType=="video":
-                d.ok('Wyst¹pi³ b³¹d!', 'B³¹d przy przetwarzaniu, lub wyczerpany limit czasowy ogl¹dania.', 'Zarejestruj siê i op³aæ abonament.', 'Aby ogl¹daæ za darmo spróbuj ponownie za jakiœ czas.')
+                d.ok('Wyst?pi? b??d!', 'B??d przy przetwarzaniu, lub wyczerpany limit czasowy ogl?dania.', 'Zarejestruj si? i op?a? abonament.', 'Aby ogl?da? za darmo spr?buj ponownie za jaki? czas.')
             elif pType=="music":
-                d.ok('Wyst¹pi³ b³¹d!', 'B³¹d przy przetwarzaniu.', 'Aby wys³uchaæ spróbuj ponownie za jakiœ czas.')
+                d.ok('Wyst?pi? b??d!', 'B??d przy przetwarzaniu.', 'Aby wys?ucha? spr?buj ponownie za jaki? czas.')
             return False
         return True
         
