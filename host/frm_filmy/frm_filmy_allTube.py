@@ -32,8 +32,16 @@ class frm_filmy_allTube():
 
 # search - lista z pierwszej strony ( po prawej)
     def search(self, searchString):
-       postdata = {"search" : searchString.replace("+", " ") }
-       return self.urlhelper.getMatches2(self.mainUrl + '/szukaj','.*','<a href="(([^<]*?)/film/([^<]*?))">(.*?)</a>', ['url', 'n1','n2', 'title','imgUrl', 'description'], postdata)
+       #postdata = {"search" : searchString.replace("+", " ") }
+       #return self.urlhelper.getMatches2(self.mainUrl + '/szukaj','.*','<a href="(([^<]*?)/film/([^<]*?))">(.*?)</a>', ['url', 'n1','n2', 'title','imgUrl', 'description'], postdata)
+        retValue = self.urlhelper.getMatches(self.mainUrl + 'index.php?url=search/autocomplete/&phrase='+ urllib.quote_plus(searchString),'"value":"([^"]*?)","data":"([^"]*?film[^"]*?)"', ['title','url', 'imgUrl', 'description'])
+        for item in retValue.items:
+            item["url"] = item["url"].replace("\/","/")
+            item["title"] = self.urlhelper.clearString(item["title"].replace("\/","/"))
+
+        return retValue       
+
+
        
 
 # link do servera
