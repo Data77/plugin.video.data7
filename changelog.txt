@@ -1,2 +1,5 @@
 - v. 1.0.1
  - Added alltube support
+
+
+ Master: https://github.com/Data77/plugin.video.data7/archive/master.zip
