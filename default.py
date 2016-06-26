@@ -59,10 +59,10 @@ class data7Films:
 
     def addDir(self, name, mode, autoplay, icon, isPlayable = True):
         u=sys.argv[0] + "?mode=" + str(mode)
-        if icon != False:
-          icon = os.path.join(ptv.getAddonInfo('path'), "images/") + icon + '.png'
-        else:
-          icon = "DefaultVideoPlaylists.png"
+        #if icon != False:
+        #  icon = os.path.join(ptv.getAddonInfo('path'), "images/") + icon + '.jpg'
+        #else:
+        #  icon = "DefaultVideoPlaylists.png"
         liz=xbmcgui.ListItem(name, iconImage=icon, thumbnailImage='')
         if autoplay and isPlayable:
           liz.setProperty("IsPlayable", "true")

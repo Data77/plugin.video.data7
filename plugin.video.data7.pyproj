@@ -54,7 +54,6 @@
     <Content Include="cookies\zobacztoseriale.cookie" />
     <Content Include="fanart.jpg" />
     <Content Include="icon.png" />
-    <Content Include="images\Ustawienia.png" />
     <Content Include="resources\lib\utils\jsbeautifier\tests\shell-smoke-test.sh" />
     <Content Include="resources\lib\utils\jsbeautifier\unpackers\README.specs.mkd" />
     <Content Include="resources\lib\utils\jsbeautifier\unpackers\tests\test-myobfuscate-input.js" />
@@ -165,7 +164,6 @@
     <Folder Include="host" />
     <Folder Include="host\frm_seriale\" />
     <Folder Include="host\frm_filmy\" />
-    <Folder Include="images" />
     <Folder Include="resources\" />
     <Folder Include="resources\lib" />
     <Folder Include="resources\lib\utils\" />
