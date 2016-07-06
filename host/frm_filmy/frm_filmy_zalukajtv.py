@@ -14,6 +14,7 @@ class frm_filmy_zalukajtv():
         self.displayname = "Zalukaj TV"
         self.urlhelper = libCommon2.urlhelper()
 
+
 # lista z pierwszej strony    
     def getPopular(self):
         return self.urlhelper.getMatches(self.mainUrl,'<div class="tivief4">.*?<div style="float:left;"><img style=".*?" src="(.*?)"/></div>\s*?<div class="rmk23m4">\s*?<h3><a href="(.*?)" title="(.*?)">', ['imgUrl', 'url', 'title','description'])
