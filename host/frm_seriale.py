@@ -188,12 +188,12 @@ class frm_seriale():
             self.add("main-menu-search-item", '' , '', 'Szukaj: [COLOR=white]\'' + searchString +'\'[/COLOR]','' ,'', '','',True,True,'',searchString)  
 
             for serviceName in self.instances:
-                try:
-                    instance = self.instances[serviceName] 
-                    foundItems = instance.search(searchString)  
-                except Exception as e:
-                    print serviceName + ".Search: " + str(e) + " :: " + traceback.format_exc()
-                    continue
+                #try:
+                instance = self.instances[serviceName] 
+                foundItems = instance.search(searchString)  
+                #except Exception as e:
+                #    print serviceName + ".Search: " + str(e) + " :: " + traceback.format_exc()
+                #    continue
 
                 color = 'FFeFe690'
                 
